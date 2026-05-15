@@ -32,7 +32,7 @@ The entire batch runs at once. You get a ranked table, full analysis per job, an
 
 ### Recruiter prep in minutes, not an hour
 
-Before every recruiter screen, you need: a sharp company brief, a honest answer to "why this role" that will hold up under follow-up, specific stories from your background to lead with, and the right questions to ask. Building that from scratch takes an hour of research and prep.
+Before every recruiter screen, you need: a sharp company brief, an honest answer to "why this role" that will hold up under follow-up, specific stories from your background to lead with, and the right questions to ask. Building that from scratch takes an hour of research and prep.
 
 When a recruiter call is scheduled, run `/new-job`. The system does live web research on the company, reads your career history and the job description, and produces a prep doc with:
 - **Company brief** — what they do, recent trajectory, health signals, anything a PM candidate should know
@@ -47,13 +47,17 @@ Ready in minutes. Walking into the call prepared instead of winging it.
 
 ## How it works
 
-You maintain three source files. Claude produces everything else.
+The core idea: you maintain the raw context (who you are, what you've done, what you care about), and Claude produces everything else. Job analysis, tailored resumes, recruiter prep docs, interview prep, tracker updates — all derived from source files you own and keep honest.
 
-- **`me.md`** — Your priorities, constraints, career history, compensation expectations. The most important file. Keep it honest — Claude will translate honesty into appropriate interview framing.
-- **`references/`** — Deep documentation for each role: what you built, why it mattered, the numbers, the mechanisms. This is what Claude reads before writing a resume bullet.
+This is not a tool that applies to jobs for you. It's a system that makes the decisions and craft faster and better — you still decide where to apply, you still do the interviews. Claude handles the work that used to eat up the hour before and after.
+
+The system lives in a handful of source files:
+
+- **`me.md`** — Your priorities, constraints, career history, compensation expectations. The most important file in the system. Keep it honest and current.
+- **`references/`** — Deep documentation for each role in your career. Strategic context, what you built, the numbers. This is what Claude reads before writing a resume bullet.
 - **`TRACKER.md`** — Pipeline tracker. Claude maintains this; you don't touch it.
 
-Job analysis, tailored resumes, recruiter prep docs, interview prep, tracker updates — all derived from your source files.
+The repo ships with a complete mock profile for **Alex Chen** — a fictional Senior PM with Notion and Intercom experience. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
 
 ---
 
@@ -70,9 +74,22 @@ Job analysis, tailored resumes, recruiter prep docs, interview prep, tracker upd
 
 ---
 
-## Getting started
+## Prerequisites
 
-**Prerequisites:** [Claude Code](https://claude.ai/code), an Anthropic API key, Node.js, and LibreOffice (for PDF rendering).
+- **Claude Code** — [claude.ai/code](https://claude.ai/code)
+- **Anthropic API key** — for running Claude Code
+- **Node.js** — for resume rendering (`resume-builder/build.js`)
+- **LibreOffice** — for PDF conversion (the renderer produces `.docx` first, then converts)
+
+Install the `docx` dependency for the renderer:
+
+```bash
+cd resume-builder && npm install docx
+```
+
+---
+
+## Getting started
 
 ```bash
 git clone https://github.com/justinonthelam/job-search-os-public
@@ -80,9 +97,9 @@ cd job-search-os-public
 cd resume-builder && npm install && cd ..
 ```
 
-The repo ships with a complete mock profile for **Alex Chen** — a fictional Senior PM with Notion and Intercom experience. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
+The repo ships with a complete mock profile for Alex Chen. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
 
-To see a complete example, look at `jobs/linear-sr-pm-2026-03-15/`: a saved JD, a tailored resume draft, a full recruiter prep doc, and a job file with AI analysis, interview prep, and post-call notes.
+To see an example of a complete job folder, look at `jobs/linear-sr-pm-2026-03-15/` — it has a saved JD, a tailored resume draft, a recruiter prep doc, and a full job file with interview prep and notes.
 
 ---
 
@@ -90,7 +107,7 @@ To see a complete example, look at `jobs/linear-sr-pm-2026-03-15/`: a saved JD, 
 
 ```
 /
-├── CLAUDE.md               # System instructions
+├── CLAUDE.md               # System instructions — how Claude operates
 ├── TRACKER.md              # Pipeline tracker (Claude maintains)
 ├── me.md                   # Your profile, priorities, and career history
 ├── jobs/                   # One subfolder per opportunity
@@ -100,10 +117,11 @@ To see a complete example, look at `jobs/linear-sr-pm-2026-03-15/`: a saved JD, 
 │       ├── recruiter-prep.md
 │       └── [slug].md       # Full job file (after recruiter screen)
 ├── companies/
-│   └── target-list.md      # Target company list with brand/tier grades
+│   └── target-list.md      # Target company list with tier/brand grades
 ├── references/             # Deep role documentation — source material for resumes
 │   └── resume-master.md    # General-purpose resume, used as prose benchmark
-├── interview-prep/         # Shared prep resources
+├── interview-prep/
+│   └── behavioral-prep.md  # STAR story bank
 ├── resume-builder/
 │   ├── resume-template.md  # Blank template for resume drafts
 │   └── build.js            # Renderer — .md to .docx to PDF
@@ -112,3 +130,11 @@ To see a complete example, look at `jobs/linear-sr-pm-2026-03-15/`: a saved JD, 
 │   └── inbox/              # Permanent JD archive for batch analysis
 └── .claude/commands/       # Skill definitions (invokable as slash commands)
 ```
+
+---
+
+## On keeping `me.md` honest
+
+The quality of every output is limited by the quality of the source files. A `me.md` that understates your real priorities will produce recruiter prep that doesn't reflect what you actually care about. A `references/` folder that only has the polished version of your work will produce resumes that miss the specific mechanisms that make a story credible.
+
+Keep `me.md` honest. Write the real reason you left your last job, not the interview version. Write what you actually want, not what sounds good. Claude will translate the honesty into appropriate interview framing — it doesn't need you to pre-sanitize.
