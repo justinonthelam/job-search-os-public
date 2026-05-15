@@ -2,6 +2,8 @@
 
 An AI-native job search system built on Claude Code. I built this to run my own search — it's open source because it works.
 
+I built this because I was tired of manually maintaining a job search pipeline. Tracking applications in a spreadsheet, rewriting the same resume bullets for each company, scrambling to prepare for recruiter screens — all of that is work that shouldn't require human attention.
+
 ---
 
 ## What it does
