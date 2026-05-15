@@ -1,0 +1,40 @@
+# Personal data — not committed for real users
+me.md
+jobs/
+references/
+TRACKER.md
+analyze/analysis-log.md
+analyze/inbox/
+offers/
+interview-prep/
+.claude/settings.json
+.claude/settings.local.json
+.claude/memory/
+
+# Build artifacts
+*.pdf
+*.docx
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# =============================================================================
+# Exceptions — mock data ships with the repo so new users can see examples
+# =============================================================================
+
+!jobs/linear-sr-pm-2026-03-15/
+!references/notion-enterprise-reference.md
+!references/intercom-smb-conversion-reference.md
+!references/cofounder-b2b-saas-reference.md
+!references/resume-master.md
+!interview-prep/behavioral-prep.md
+!analyze/analysis-log.md
+!analyze/inbox/linear-sr-pm.md
+!analyze/inbox/figma-pm-ai.md
+!TRACKER.md
