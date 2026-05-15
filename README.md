@@ -10,9 +10,7 @@ I was tired of manually maintaining a job search pipeline. Tracking applications
 
 ### Highly tailored resumes that actually convert
 
-Generic resumes fail. Recruiters screen for candidates who look like they were made for the specific role, and the only way to do that is to tailor every bullet to what that company actually cares about.
-
-This system reads the job description, reads deep documentation of your career (the real stories — mechanisms, numbers, decisions), and writes the sharpest possible argument that you're the right person for that specific job. Not a find-and-replace of keywords. A reasoned draft that leads with the right story for this role, reorders bullets to match the JD's priorities, and cuts anything that doesn't pull its weight.
+Reads deep documentation of your career and writes the sharpest argument that you're the right person for this specific role. Not keyword stuffing — a reasoned draft that leads with the right story, reordered for what this JD actually cares about.
 
 In my search, tailored resumes from this system produced a **5x higher recruiter callback rate** on cold applications compared to my general resume.
 
@@ -20,30 +18,13 @@ In my search, tailored resumes from this system produced a **5x higher recruiter
 
 ### Mass job analysis — score, prioritize, and apply in parallel
 
-When you're evaluating 20 job postings at once, the bottleneck isn't reading JDs. It's the research: is this company worth your time? Does your background actually match what they're hiring for, or just superficially? Will a recruiter doing a 10-second scan even see the fit?
-
-Paste a batch of job postings. The system:
-1. Researches each company live (funding, trajectory, recent news, product direction)
-2. Scores the role on two dimensions: actual fit to your background, and how a recruiter will read your candidacy
-3. Ranks the full list so you know where to focus
-4. For any job you want to apply to — creates the tailored resume automatically, in parallel
-
-The entire batch runs at once. You get a ranked table, full analysis per job, and resumes ready to review — without manually researching a single company.
+Paste a batch of job postings. The system researches each company live, scores fit on two dimensions, ranks the list, and drafts tailored resumes for any you want to apply to — all in parallel.
 
 ---
 
 ### Recruiter prep in minutes, not an hour
 
-Before every recruiter screen, you need: a sharp company brief, an honest answer to "why this role" that will hold up under follow-up, specific stories from your background to lead with, and the right questions to ask. Building that from scratch takes an hour of research and prep.
-
-When a recruiter call is scheduled, run `/new-job`. The system does live web research on the company, reads your career history and the job description, and produces a prep doc with:
-- **Company brief** — what they do, recent trajectory, health signals, anything a PM candidate should know
-- **Why this job** — the honest internal answer, plus a polished interviewable version ready to say out loud
-- **How to position yourself** — which specific stories from your background to lead with, tailored to what this role actually needs
-- **Questions to ask** — derived from your priorities and what the role suggests, not a generic bank
-- **Comp and logistics to probe**
-
-Ready in minutes. Walking into the call prepared instead of winging it.
+Run `/new-job` when a call is scheduled. Get a full prep doc: company brief, "why this role" answer, stories to lead with, questions to ask, comp to probe.
 
 ---
 
@@ -60,6 +41,45 @@ The system lives in a handful of source files:
 - **`TRACKER.md`** — Pipeline tracker. Claude maintains this; you don't touch it.
 
 The repo ships with a complete mock profile for **Alex Chen** — a fictional Senior PM with Notion and Intercom experience. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
+
+---
+
+## Skill details
+
+### Tailored resumes
+
+Generic resumes fail. Recruiters screen for candidates who look like they were made for the specific role, and the only way to do that is to tailor every bullet to what that company actually cares about.
+
+This system reads the job description, reads deep documentation of your career (the real stories — mechanisms, numbers, decisions), and writes the sharpest possible argument that you're the right person for that specific job. Not a find-and-replace of keywords. A reasoned draft that leads with the right story for this role, reorders bullets to match the JD's priorities, and cuts anything that doesn't pull its weight.
+
+---
+
+### Job analysis
+
+When you're evaluating 20 job postings at once, the bottleneck isn't reading JDs. It's the research: is this company worth your time? Does your background actually match what they're hiring for, or just superficially? Will a recruiter doing a 10-second scan even see the fit?
+
+Paste a batch of job postings. The system:
+1. Researches each company live (funding, trajectory, recent news, product direction)
+2. Scores the role on two dimensions: actual fit to your background, and how a recruiter will read your candidacy
+3. Ranks the full list so you know where to focus
+4. For any job you want to apply to — creates the tailored resume automatically, in parallel
+
+The entire batch runs at once. You get a ranked table, full analysis per job, and resumes ready to review — without manually researching a single company.
+
+---
+
+### Recruiter prep
+
+Before every recruiter screen, you need: a sharp company brief, an honest answer to "why this role" that will hold up under follow-up, specific stories from your background to lead with, and the right questions to ask. Building that from scratch takes an hour of research and prep.
+
+When a recruiter call is scheduled, run `/new-job`. The system does live web research on the company, reads your career history and the job description, and produces a prep doc with:
+- **Company brief** — what they do, recent trajectory, health signals, anything a PM candidate should know
+- **Why this job** — the honest internal answer, plus a polished interviewable version ready to say out loud
+- **How to position yourself** — which specific stories from your background to lead with, tailored to what this role actually needs
+- **Questions to ask** — derived from your priorities and what the role suggests, not a generic bank
+- **Comp and logistics to probe**
+
+Ready in minutes. Walking into the call prepared instead of winging it.
 
 ---
 
