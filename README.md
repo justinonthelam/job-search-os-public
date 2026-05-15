@@ -1,30 +1,59 @@
 # Job Search OS
 
-An AI-native job search system built on Claude Code. Raw context in, derived outputs out.
+An AI-native job search system built on Claude Code. I built this to run my own search — it's open source because it works.
 
 ---
 
-## What this is
+## What it does
 
-I built this because I was tired of manually maintaining a job search pipeline. Tracking applications in a spreadsheet, rewriting the same resume bullets for each company, scrambling to prepare for recruiter screens — all of that is work that shouldn't require human attention.
+### Highly tailored resumes that actually convert
 
-The core idea: you maintain the raw context (who you are, what you've done, what you care about), and Claude produces everything else. Job analysis, tailored resumes, recruiter prep docs, interview prep, tracker updates — all derived from source files you own and keep honest.
+Generic resumes fail. Recruiters screen for candidates who look like they were made for the specific role, and the only way to do that is to tailor every bullet to what that company actually cares about.
 
-This is not a tool that applies to jobs for you. It's a system that makes the decisions and craft faster and better — you still decide where to apply, you still do the interviews. Claude just handles the work that used to eat up the 20 minutes before and after.
+This system reads the job description, reads deep documentation of your career (the real stories — mechanisms, numbers, decisions), and writes the sharpest possible argument that you're the right person for that specific job. Not a find-and-replace of keywords. A reasoned draft that leads with the right story for this role, reorders bullets to match the JD's priorities, and cuts anything that doesn't pull its weight.
+
+In my search, tailored resumes from this system produced a **5x higher recruiter callback rate** on cold applications compared to my general resume.
+
+---
+
+### Mass job analysis — score, prioritize, and apply in parallel
+
+When you're evaluating 20 job postings at once, the bottleneck isn't reading JDs. It's the research: is this company worth your time? Does your background actually match what they're hiring for, or just superficially? Will a recruiter doing a 10-second scan even see the fit?
+
+Paste a batch of job postings. The system:
+1. Researches each company live (funding, trajectory, recent news, product direction)
+2. Scores the role on two dimensions: actual fit to your background, and how a recruiter will read your candidacy
+3. Ranks the full list so you know where to focus
+4. For any job you want to apply to — creates the tailored resume automatically, in parallel
+
+The entire batch runs at once. You get a ranked table, full analysis per job, and resumes ready to review — without manually researching a single company.
+
+---
+
+### Recruiter prep in minutes, not an hour
+
+Before every recruiter screen, you need: a sharp company brief, a honest answer to "why this role" that will hold up under follow-up, specific stories from your background to lead with, and the right questions to ask. Building that from scratch takes an hour of research and prep.
+
+When a recruiter call is scheduled, run `/new-job`. The system does live web research on the company, reads your career history and the job description, and produces a prep doc with:
+- **Company brief** — what they do, recent trajectory, health signals, anything a PM candidate should know
+- **Why this job** — the honest internal answer, plus a polished interviewable version ready to say out loud
+- **How to position yourself** — which specific stories from your background to lead with, tailored to what this role actually needs
+- **Questions to ask** — derived from your priorities and what the role suggests, not a generic bank
+- **Comp and logistics to probe**
+
+Ready in minutes. Walking into the call prepared instead of winging it.
 
 ---
 
 ## How it works
 
-The system lives in a handful of source files:
+You maintain three source files. Claude produces everything else.
 
-- **`me.md`** — Your priorities, constraints, career history, compensation expectations. The most important file in the system. Keep it honest and current.
-- **`references/`** — Deep documentation for each role in your career. Strategic context, what you built, the numbers. This is what Claude reads before writing a resume bullet.
+- **`me.md`** — Your priorities, constraints, career history, compensation expectations. The most important file. Keep it honest — Claude will translate honesty into appropriate interview framing.
+- **`references/`** — Deep documentation for each role: what you built, why it mattered, the numbers, the mechanisms. This is what Claude reads before writing a resume bullet.
 - **`TRACKER.md`** — Pipeline tracker. Claude maintains this; you don't touch it.
 
-Everything else is derived. When you ask Claude to draft a resume, it reads the JD, reads your references, and writes the sharpest possible argument that you're the right person for that specific job. When you ask Claude to prep you for a recruiter screen, it does live web research on the company and produces a prep doc calibrated to your priorities.
-
-The repo ships with a complete mock profile for **Alex Chen** — a fictional Senior PM with Notion and Intercom experience. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
+Job analysis, tailored resumes, recruiter prep docs, interview prep, tracker updates — all derived from your source files.
 
 ---
 
@@ -32,41 +61,28 @@ The repo ships with a complete mock profile for **Alex Chen** — a fictional Se
 
 | Skill | What it does |
 |-------|-------------|
-| `/setup` | Onboard by replacing Alex Chen's profile with your own, one section at a time |
-| `/analyze-job` | Paste a JD and get a score, fit signal, recruiter read, and flags. Batch mode available for multiple jobs. |
-| `/new-job` | When a recruiter call is scheduled — generates the recruiter prep doc for the job folder |
+| `/setup` | Onboard by replacing Alex Chen's mock profile with your own, one section at a time |
+| `/analyze-job` | Score a job: fit signal, recruiter read, company quality, flags. Batch mode analyzes many jobs in parallel. |
+| `/new-job` | When a recruiter call is scheduled — generates the full recruiter prep doc |
 | `/generate-md-resume` | Draft a tailored resume for a specific role, pulling from your references |
-| `/generate-pdf-resume` | Render an approved resume draft to PDF via the `build.js` renderer |
-| `/recruiter-prep` | Full recruiter prep doc: company brief, positioning, questions to ask, comp to probe |
-
----
-
-## Prerequisites
-
-- **Claude Code** — [claude.ai/code](https://claude.ai/code)
-- **Anthropic API key** — for running Claude Code
-- **Node.js** — for resume rendering (`resume-builder/build.js`)
-- **LibreOffice** — for PDF conversion (the renderer produces `.docx` first, then converts)
-
-Install the `docx` dependency for the renderer:
-
-```bash
-cd resume-builder && npm install docx
-```
+| `/generate-pdf-resume` | Render an approved resume draft to PDF |
+| `/recruiter-prep` | Recruiter prep doc: company brief, positioning, questions to ask, comp to probe |
 
 ---
 
 ## Getting started
 
+**Prerequisites:** [Claude Code](https://claude.ai/code), an Anthropic API key, Node.js, and LibreOffice (for PDF rendering).
+
 ```bash
-git clone https://github.com/[your-username]/job-search-os-public
+git clone https://github.com/justinonthelam/job-search-os-public
 cd job-search-os-public
 cd resume-builder && npm install && cd ..
 ```
 
-The repo ships with a complete mock profile for Alex Chen. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
+The repo ships with a complete mock profile for **Alex Chen** — a fictional Senior PM with Notion and Intercom experience. You can run any skill immediately to see how the system works, then run `/setup` when you're ready to make it your own.
 
-To see an example of a complete job folder, look at `jobs/linear-sr-pm-2026-03-15/` — it has a saved JD, a tailored resume draft, a recruiter prep doc, and a full job file with interview prep and notes.
+To see a complete example, look at `jobs/linear-sr-pm-2026-03-15/`: a saved JD, a tailored resume draft, a full recruiter prep doc, and a job file with AI analysis, interview prep, and post-call notes.
 
 ---
 
@@ -74,7 +90,7 @@ To see an example of a complete job folder, look at `jobs/linear-sr-pm-2026-03-1
 
 ```
 /
-├── CLAUDE.md               # System instructions — how Claude operates
+├── CLAUDE.md               # System instructions
 ├── TRACKER.md              # Pipeline tracker (Claude maintains)
 ├── me.md                   # Your profile, priorities, and career history
 ├── jobs/                   # One subfolder per opportunity
@@ -84,11 +100,10 @@ To see an example of a complete job folder, look at `jobs/linear-sr-pm-2026-03-1
 │       ├── recruiter-prep.md
 │       └── [slug].md       # Full job file (after recruiter screen)
 ├── companies/
-│   └── target-list.md      # Target company list with tier/brand grades
+│   └── target-list.md      # Target company list with brand/tier grades
 ├── references/             # Deep role documentation — source material for resumes
 │   └── resume-master.md    # General-purpose resume, used as prose benchmark
-├── interview-prep/
-│   └── behavioral-prep.md  # STAR story bank
+├── interview-prep/         # Shared prep resources
 ├── resume-builder/
 │   ├── resume-template.md  # Blank template for resume drafts
 │   └── build.js            # Renderer — .md to .docx to PDF
@@ -97,27 +112,3 @@ To see an example of a complete job folder, look at `jobs/linear-sr-pm-2026-03-1
 │   └── inbox/              # Permanent JD archive for batch analysis
 └── .claude/commands/       # Skill definitions (invokable as slash commands)
 ```
-
----
-
-## Key workflows
-
-### Analyze a job
-
-Paste a job description (with a URL) and run `/analyze-job`. You get a score, fit signal, recruiter read, and flags. For multiple jobs at once, separate them with `---` — Claude saves them to `analyze/inbox/`, analyzes in parallel, and updates the running log.
-
-### Draft a resume
-
-Tell Claude "draft a resume for [Company]" or run `/generate-md-resume`. Claude reads the JD, reads all your `references/` files, and writes the sharpest possible tailored resume. Review the draft, iterate if needed, then run `/generate-pdf-resume` to render it.
-
-### Prep for a recruiter call
-
-When a recruiter call is scheduled, run `/new-job`. Claude generates a recruiter prep doc: company brief (from live web research), why this job (honest + interviewable), how to position yourself, questions to ask, comp to probe.
-
----
-
-## On keeping `me.md` honest
-
-The quality of every output is limited by the quality of the source files. A `me.md` that understates your real priorities will produce recruiter prep that doesn't reflect what you actually care about. A `references/` folder that only has the polished version of your work will produce resumes that miss the specific mechanisms that make a story credible.
-
-Keep `me.md` honest. Write the real reason you left your last job, not the interview version. Write what you actually want, not what sounds good. Claude will translate the honesty into appropriate interview framing — it doesn't need you to pre-sanitize.
